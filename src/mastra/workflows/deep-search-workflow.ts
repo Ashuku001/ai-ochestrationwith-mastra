@@ -269,7 +269,7 @@ const searchPass = createWorkflow({
     stateSchema
 }).then(generateQueries)
 .then(search)
-.then(evaluateResults)
+.then(evaluateResults).commit()
 
 const deepSearch = createWorkflow({
     id: "deep-search",
@@ -281,3 +281,6 @@ const deepSearch = createWorkflow({
 }).then(finalizeAnswer).commit();
 
 export {deepSearch}
+
+
+

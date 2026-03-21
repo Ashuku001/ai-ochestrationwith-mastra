@@ -1,13 +1,33 @@
 import { Agent } from "@mastra/core/agent";
 import { okrMcpClient } from "../mcp/okr-mcp-client";
+import type { MastraMemory } from "@mastra/core/memory";
 import { Memory } from "@mastra/memory";
 import { webSearch } from "../tools/search-tool";
 import { deepSearch } from "../workflows/deep-search-workflow";
 import { mongoUuidGenerator } from "../tools/create-mongo-uuid";
-import { culturalCoachAgent } from "./okr/cultural-coach";
-import { governanceLeadAgent } from "./okr/governance-lead";
-import { strategicMapperAgent } from "./okr/strategic-mapper";
 import { okrWorkflow } from "../workflows/okr-worflow";
+import { Workspace, LocalFilesystem, LocalSandbox, WORKSPACE_TOOLS } from '@mastra/core/workspace'
+import { resolve } from 'node:path'
+
+const workspace = new Workspace({
+  bm25: true,
+  filesystem: new LocalFilesystem({
+    basePath: resolve(import.meta.dirname, "../../workspace/okrs"),
+  }),
+  sandbox: new LocalSandbox({
+    workingDirectory: './workspace/okrs',
+  }),
+  skills: ['/skills'],
+  tools: {
+    [WORKSPACE_TOOLS.SANDBOX.EXECUTE_COMMAND]: {
+      requireApproval: true,
+    },
+    [WORKSPACE_TOOLS.FILESYSTEM.READ_FILE]: { name: 'view' },
+    [WORKSPACE_TOOLS.FILESYSTEM.GREP]: { name: 'search_content' },
+    [WORKSPACE_TOOLS.FILESYSTEM.LIST_FILES]: { name: 'find_files' },
+  }
+})
+
 
 export const okrAgent = new Agent({
     id: "okr-agent",
@@ -134,5 +154,6 @@ export const okrAgent = new Agent({
     tools: {...(await okrMcpClient.listTools()), webSearch, mongoUuidGenerator},
     memory: new Memory(),
     workflows: {deepSearch, okrWorkflow},
-    agents: {}
+    agents: {},
+    workspace,
 })

@@ -45,7 +45,6 @@ export const weatherAgent = new Agent({
       },
     },
   },
-  memory: new Memory(),
   defaultOptions: {
     autoResumeSuspendedTools: true,
   }

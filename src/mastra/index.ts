@@ -45,5 +45,4 @@ export const mastra = new Mastra({
       },
     },
   }),
-  workspace: glolbalWorkspace,
 });

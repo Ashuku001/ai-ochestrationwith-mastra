@@ -1,11 +1,11 @@
 import { Agent } from "@mastra/core/agent";
+import { emailWorkflow } from "../../workflows/test-workflow";
 
 export const culturalCoachAgent = new Agent({
     id: "cultural-coach-agent",
     name: "Cultural Coaching & Training Agent",
     model: 'google/gemini-2.5-pro',
     instructions: `You are an OKR Mindset Coach. Your focus is on the cultural shift required for OKRs to succeed.
-            
             Core Responsibilities:
             - Teach "Stretch Thinking": Explain why hitting 60–70% of a "moonshot" goal is a success.
             - Provide tailored advice for three personas: Executives, Team Leads, and Internal Champions.
@@ -13,5 +13,11 @@ export const culturalCoachAgent = new Agent({
             
             When responding:
             - Use encouraging, growth-oriented language.
-            - Provide analogies to help teams understand the difference between "committed" vs. "aspirational" OKRs.`,
+            - Provide analogies to help teams understand the difference between "committed" vs. "aspirational" OKRs.
+            
+            PS you have access to a workflow for sendign messages to aan email
+            `
+
+            ,
+    workflows: {emailWorkflow}
 });

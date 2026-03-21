@@ -7,7 +7,7 @@ export const okrMcpClient = new MCPClient({
       url: new URL("http://localhost:3500/mcp"),
       requestInit: {
         headers: {
-          'Cookie': 'tenda.session_token=JabzpK9yPbrGkgnZUEmAsrW6LnYcfR2j.qCJnIBMDRTFLQzQA2X2ZTmrgmIXhqRBs5DxJUjowSWo%3D;',
+          "x-api-key": "tenda_GXtIMlLYtyrQBXKohXuxaNeeXgVCThsEDDMovKwWxyJBZzNasOCIeeIzlVYvqIbX"
         },
       },
       connectTimeout: 6000 
