@@ -1,13 +1,14 @@
 import { Agent } from "@mastra/core/agent";
 import { okrMcpClient } from "../mcp/okr-mcp-client";
-import type { MastraMemory } from "@mastra/core/memory";
 import { Memory } from "@mastra/memory";
 import { webSearch } from "../tools/search-tool";
 import { deepSearch } from "../workflows/deep-search-workflow";
 import { mongoUuidGenerator } from "../tools/create-mongo-uuid";
-import { okrWorkflow } from "../workflows/okr-worflow";
+import { okrConsultationWorkflow } from "../workflows/okr-worflow";
 import { Workspace, LocalFilesystem, LocalSandbox, WORKSPACE_TOOLS } from '@mastra/core/workspace'
 import { resolve } from 'node:path'
+import { chiefOfStaffAgent } from "./okr/chief-of-staff";
+import { okrResearcherAgent } from "./okr/researcher";
 
 const workspace = new Workspace({
   bm25: true,
@@ -153,7 +154,6 @@ export const okrAgent = new Agent({
     model: 'google/gemini-2.5-pro',
     tools: {...(await okrMcpClient.listTools()), webSearch, mongoUuidGenerator},
     memory: new Memory(),
-    workflows: {deepSearch, okrWorkflow},
-    agents: {},
+    workflows: {deepSearch, okrConsultationWorkflow},
     workspace,
 })

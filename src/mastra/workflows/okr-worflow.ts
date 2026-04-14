@@ -1,5 +1,4 @@
 import { createStep, createWorkflow } from "@mastra/core/workflows";
-import { Mastra } from "@mastra/core";
 import { z } from "zod";
 
 const stateSchema = z.object({
@@ -12,6 +11,7 @@ const stateSchema = z.object({
 
 const strategicStep = createStep({
   id: "refine-okrs",
+  description: `Translates the company vision into well-structured OKRs`,
   inputSchema: z.object({ companyVision: z.string() }),
   outputSchema: z.object({}),
   stateSchema,
@@ -30,6 +30,7 @@ const strategicStep = createStep({
 
 const coachingStep = createStep({
   id: "cultural-coaching",
+  description: `Adds people/mindset context — how the team should think and behave to achieve the OKRs`,
   inputSchema: z.object({}),
   outputSchema: z.object({}),
   stateSchema,
@@ -46,6 +47,7 @@ const coachingStep = createStep({
 
 const governanceStep = createStep({
   id: "governance-planning",
+  description: `Designs the operational rhythm — cadences, check-ins, review cycles`,
   inputSchema: z.object({}),
   outputSchema: z.object({}),
   stateSchema,
@@ -62,6 +64,7 @@ const governanceStep = createStep({
 
 const combineStep = createStep({
   id: "combine-results",
+  description: `Assembles all three outputs into a single consulting report`,
   inputSchema: z.object({
     "cultural-coaching": z.object({}),
     "governance-planning": z.object({}),
@@ -90,8 +93,20 @@ const combineStep = createStep({
   },
 });
 
-export const okrWorkflow = createWorkflow({
-  id: "okr-workflow",
+export const okrConsultationWorkflow = createWorkflow({
+  id: "okr-consultation-workflow",
+  description: `Company Vision Input
+       ↓
+[Strategic Mapper Agent]  → Refines raw vision into proper OKRs
+       ↓
+  ┌────┴────┐
+  ↓         ↓         ← runs in PARALLEL
+[Cultural   [Governance    
+ Coach]      Lead]         
+  ↓         ↓
+  └────┬────┘
+       ↓
+[Combine Step] → Merges everything into one document`,
   inputSchema: z.object({ companyVision: z.string() }),
   outputSchema: z.object({
     finalConsultingPackage: z.string(),

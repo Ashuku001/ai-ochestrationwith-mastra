@@ -1,5 +1,4 @@
 import { Agent } from "@mastra/core/agent";
-import { emailWorkflow } from "../../workflows/test-workflow";
 
 export const culturalCoachAgent = new Agent({
     id: "cultural-coach-agent",
@@ -19,5 +18,4 @@ export const culturalCoachAgent = new Agent({
             `
 
             ,
-    workflows: {emailWorkflow}
 });

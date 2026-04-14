@@ -7,7 +7,7 @@ export const okrMcpClient = new MCPClient({
       url: new URL("http://localhost:3500/mcp"),
       requestInit: {
         headers: {
-          "x-api-key": "tenda_GXtIMlLYtyrQBXKohXuxaNeeXgVCThsEDDMovKwWxyJBZzNasOCIeeIzlVYvqIbX"
+          "x-api-key": "<<TEND_API_KEY>>"
         },
       },
       connectTimeout: 6000 
